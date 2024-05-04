@@ -85,6 +85,10 @@ python3 main.py
 
 ![Ground Truth](./plot/label.png)
 
+### Model Architecture
+
+![Model Architecture](./plot/model.png)
+
 ## License
 
 ![License](https://img.shields.io/github/license/hibana2077/Leaves-Segmentation-Challenge)
