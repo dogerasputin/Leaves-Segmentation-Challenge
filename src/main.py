@@ -1,10 +1,11 @@
 import numpy as np
 import torch
+import torch.onnx
 import torch.nn as nn
 import torch.optim as optim
 import os
 
-from tqdm.rich import tqdm
+from tqdm import tqdm
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
@@ -160,3 +161,9 @@ plt.figure(figsize=(10, 10))
 plt.imshow(label,cmap='gray')
 plt.axis('off')
 plt.savefig('../plot/label.png')
+
+## convert to onnx
+dummy_input = torch.randn(1, 3, 224, 224).to(device)
+onnx_path = '../model/model.onnx'
+torch.onnx.export(model, dummy_input, onnx_path)
+print('onnx model saved at', onnx_path)

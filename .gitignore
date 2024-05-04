@@ -161,3 +161,4 @@ cython_debug/
 
 data/
 src/train.ipynb
+model/model.onnx
