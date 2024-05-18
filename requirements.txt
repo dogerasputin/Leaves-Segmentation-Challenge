@@ -2,3 +2,4 @@ tqdm
 pillow
 onnx
 matplotlib
+timm
