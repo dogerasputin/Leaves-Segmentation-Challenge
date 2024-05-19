@@ -70,11 +70,11 @@ def get_data_loader_from_path(data_path, label_path, batch_size):
     return get_data_loader(data, label, batch_size)
 
 # model
-from self_model import Transformer_VAE
+from self_model import EVANet
 
 def get_model():
-    model = torch.hub.load('mateuszbuda/brain-segmentation-pytorch', 'unet',in_channels=3, out_channels=1, init_features=32, pretrained=False)
-    # model = Transformer_VAE()
+    # model = torch.hub.load('mateuszbuda/brain-segmentation-pytorch', 'unet',in_channels=3, out_channels=1, init_features=32, pretrained=False)
+    model = EVANet()
     return model
 
 # train
@@ -89,12 +89,17 @@ print('device:', device)
 ## set hyperparameters
 batch_size = 32
 lr = 1e-2
-epochs = 18
+epochs = 100
 
 ## load data
 data_path = '../data/A1/'
 label_path = '../data/A1/'
 data_loader = get_data_loader_from_path(data_path, label_path, batch_size)
+
+# show data shape
+img, label = next(iter(data_loader))
+print('img shape:', img.shape)
+print('label shape:', label.shape)
 
 ## load criterion
 criterion = nn.L1Loss().to(device)
@@ -109,6 +114,7 @@ optimizer = optim.AdamW(model.parameters(), lr=lr)
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, epochs)
 
 ## train
+cnt = 0
 model.train()
 losses = []
 for epoch in range(epochs):
@@ -118,6 +124,9 @@ for epoch in range(epochs):
         label = label.to(device)
         optimizer.zero_grad()
         pred = model(img)
+        if cnt == 0:
+            print('pred shape:', pred.shape)
+            cnt += 1
         loss = criterion(pred, label)
         loss.backward()
         optimizer.step()
@@ -163,7 +172,7 @@ plt.axis('off')
 plt.savefig('../plot/label.png')
 
 ## convert to onnx
-dummy_input = torch.randn(1, 3, 224, 224).to(device)
-onnx_path = '../model/model.onnx'
-torch.onnx.export(model, dummy_input, onnx_path)
-print('onnx model saved at', onnx_path)
+# dummy_input = torch.randn(1, 3, 224, 224).to(device)
+# onnx_path = '../model/model.onnx'
+# torch.onnx.export(model, dummy_input, onnx_path)
+# print('onnx model saved at', onnx_path)
