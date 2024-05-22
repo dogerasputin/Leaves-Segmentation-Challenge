@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-05-22 23:44:45
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-05-23 00:23:12
+LastEditTime: 2024-05-23 00:58:17
 FilePath: \Leaves-Segmentation-Challenge\src\instance_seg.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -230,15 +230,17 @@ for epoch in range(num_epochs):
 print("Training Done!")
 
 # plot loss history
-plt.plot(loss_hist)
+plt.plot(loss_hist)# shape (10, 60) -> 10 epochs, 60 iterations
 plt.xlabel('Iterations')
 plt.ylabel('Loss')
 plt.title('Loss History')
-plt.legend()
+plt.legend([f"Epoch {i}" for i in range(num_epochs)])
 plt.savefig("../plot/loss.png")
 
-image = read_image("../data/A1/plant002_rgb.png", ImageReadMode.RGB)
-labels = read_image("../data/A1/plant002_label.png")
+test_id = "plant002"
+
+image = read_image(f"../data/A1/{test_id}_rgb.png", ImageReadMode.RGB)
+labels = read_image(f"../data/A1/{test_id}_label.png")
 labels_unique = torch.unique(labels)
 eval_transform = get_transform(train=False)
 
@@ -257,7 +259,23 @@ image = image[:3, ...]
 masks = (pred["masks"] > 0.7).squeeze(1)
 image = draw_segmentation_masks(image, masks[:labels_unique.shape[0]-3])
 
-
+# save prediction
 plt.figure(figsize=(10, 10))
 plt.imshow(image.permute(1, 2, 0))
 plt.savefig("../plot/instance_seg.png")
+
+# save ground truth (use label to draw masks)
+image = read_image(f"../data/A1/{test_id}_rgb.png", ImageReadMode.RGB)
+mask = read_image(f"../data/A1/{test_id}_label.png")
+# convert to multi-class
+obj_ids = torch.unique(mask)
+obj_ids = obj_ids[1:]
+num_objs = len(obj_ids)
+masks = (mask == obj_ids[:, None, None]).to(dtype=torch.uint8)
+print(masks.shape)
+masks = (masks > 0)
+gd_image = draw_segmentation_masks(image, masks)
+
+plt.figure(figsize=(10, 10))
+plt.imshow(gd_image.permute(1, 2, 0))
+plt.savefig("../plot/instance_seg_gt.png")
