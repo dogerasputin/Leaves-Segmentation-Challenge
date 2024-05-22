@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-05-22 23:44:45
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-05-23 00:08:17
+LastEditTime: 2024-05-23 00:12:40
 FilePath: \Leaves-Segmentation-Challenge\src\instance_seg.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -216,6 +216,7 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(
 num_epochs = args.epochs
 
 for epoch in range(num_epochs):
+    print(f"===== Epoch {epoch} =====")
     # train for one epoch, printing every 10 iterations
     train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
     # update the learning rate
