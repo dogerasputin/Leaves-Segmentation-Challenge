@@ -1,3 +1,11 @@
+<!--
+ * @Author: hibana2077 hibana2077@gmail.com
+ * @Date: 2024-05-03 14:04:51
+ * @LastEditors: hibana2077 hibana2077@gmail.com
+ * @LastEditTime: 2024-05-23 00:59:26
+ * @FilePath: \Leaves-Segmentation-Challenge\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 # Leaves Segmentation Challenge
 
 <p align="center">
@@ -79,15 +87,11 @@ python3 main.py
 
 ### Prediction
 
-![Prediction](./plot/pred.png)
+![Prediction](./plot/instance_seg.png)
 
 ### Ground Truth
 
-![Ground Truth](./plot/label.png)
-
-### Model Architecture
-
-![Model Architecture](./plot/model.png)
+![Ground Truth](./plot/instance_seg_gt.png)
 
 ## License
 

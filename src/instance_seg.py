@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-05-22 23:44:45
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-05-23 00:58:17
+LastEditTime: 2024-05-23 01:06:52
 FilePath: \Leaves-Segmentation-Challenge\src\instance_seg.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -272,7 +272,6 @@ obj_ids = torch.unique(mask)
 obj_ids = obj_ids[1:]
 num_objs = len(obj_ids)
 masks = (mask == obj_ids[:, None, None]).to(dtype=torch.uint8)
-print(masks.shape)
 masks = (masks > 0)
 gd_image = draw_segmentation_masks(image, masks)
 
