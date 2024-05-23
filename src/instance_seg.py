@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-05-22 23:44:45
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-05-23 12:14:30
+LastEditTime: 2024-05-23 13:02:59
 FilePath: \Leaves-Segmentation-Challenge\src\instance_seg.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -40,6 +40,7 @@ from engine import train_one_epoch, evaluate
 parser = argparse.ArgumentParser(description='Instance Segmentation')
 parser.add_argument('--backbone', default='resnet18', type=str, help='backbone model: resnet18, resnet34, resnet50, resnet101, resnet152')
 parser.add_argument('--epochs', default=10, type=int, help='number of epochs')
+parser.add_argument('--hidden_layer', default=512, type=int, help='number of hidden layer')
 
 args = parser.parse_args()
 
@@ -110,7 +111,7 @@ class LeavesDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.imgs)
     
-def get_model_instance_segmentation(num_classes, backbone_name='resnet18'):
+def get_model_instance_segmentation(num_classes, backbone_name='resnet18', hidden_layer=512):
     # load an instance segmentation model pre-trained on COCO
     # sample 1
     # model = torchvision.models.detection.maskrcnn_resnet50_fpn() 
@@ -189,7 +190,7 @@ data_loader_test = DataLoader(
 )
 
 # get the model using our helper function
-model = get_model_instance_segmentation(num_classes, args.backbone)
+model = get_model_instance_segmentation(num_classes, args.backbone, args.hidden_layer)
 
 # move model to the right device
 model.to(device)
