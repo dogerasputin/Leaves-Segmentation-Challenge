@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-05-22 23:44:45
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-05-23 01:06:52
+LastEditTime: 2024-05-23 12:14:30
 FilePath: \Leaves-Segmentation-Challenge\src\instance_seg.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -263,6 +263,8 @@ image = draw_segmentation_masks(image, masks[:labels_unique.shape[0]-3])
 plt.figure(figsize=(10, 10))
 plt.imshow(image.permute(1, 2, 0))
 plt.savefig("../plot/instance_seg.png")
+# print training hyperparameters (epochs, backbone...)
+print(args)
 
 # save ground truth (use label to draw masks)
 image = read_image(f"../data/A1/{test_id}_rgb.png", ImageReadMode.RGB)
