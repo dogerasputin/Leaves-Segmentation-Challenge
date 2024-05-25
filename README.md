@@ -2,7 +2,7 @@
  * @Author: hibana2077 hibana2077@gmail.com
  * @Date: 2024-05-03 14:04:51
  * @LastEditors: hibana2077 hibana2077@gmail.com
- * @LastEditTime: 2024-05-23 00:59:26
+ * @LastEditTime: 2024-05-25 17:43:29
  * @FilePath: \Leaves-Segmentation-Challenge\README.md
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,17 +25,20 @@
 
 ## Introduction
 
-The **Leaves Segmentation Challenge** addresses the task of segmenting leaves from images, a fundamental step in plant phenotyping and agricultural research. Accurate segmentation of leaves from images enables automated analysis of plant growth, health, and development.
+This repository encompasses two distinct types of models designed for the leaf segmentation challenge:
 
-In this challenge, we employ a U-Net architecture, a popular convolutional neural network (CNN) model known for its effectiveness in image segmentation tasks. The U-Net architecture consists of a contracting path to capture context and a symmetric expanding path for precise localization.
+- Semantic Segmentation
+- Instance Segmentation
 
-To prepare the dataset for training, we convert the label annotations into grayscale images, facilitating the segmentation process. During training, we utilize the AdamW optimizer and a cosine annealing learning rate scheduler. The choice of these optimization techniques helps in efficiently navigating the parameter space and converging to a desirable solution.
+### Semantic Segmentation
 
-For loss computation, we employ the L1 loss function, which calculates the mean absolute error between predicted and ground truth pixel values. This loss function is suitable for segmentation tasks as it penalizes deviations regardless of direction, ensuring robust training.
+For the semantic segmentation task, we implemented the U-Net model, which is renowned for its effectiveness in medical image segmentation. The model's architecture facilitates precise segmentation by using a contracting path to capture context and a symmetric expanding path for localization. To optimize the performance, we employed the L1 loss function, which is particularly suitable for regression tasks as it is less sensitive to outliers. The AdamW optimizer was chosen due to its adaptive learning rate capabilities and decoupled weight decay, which aids in faster convergence. Furthermore, we adopted a cosine annealing learning rate adjustment strategy to dynamically adjust the learning rate during training, thus enhancing the model's ability to converge to a global minimum. This comprehensive approach resulted in a rapid decrease in loss, with the model achieving optimal performance after a total of 10 epochs.
 
-The training process spans over 15 epochs, during which the model learns to accurately segment leaves from images. Upon completion of training, the final achieved loss is 0.0309, indicative of the model's ability to minimize segmentation errors and generalize well to unseen data.
+### Instance Segmentation
 
-In the subsequent sections, we present the results of the trained model, showcasing the loss curve, predicted segmentations, and ground truth annotations. These visualizations offer insights into the performance and efficacy of the developed segmentation pipeline.
+In addressing the instance segmentation task, we leveraged the Mask R-CNN model, an extension of the Faster R-CNN model, designed to provide pixel-level segmentation of objects in an image. This model is equipped with a backbone network, which in our case, after thorough experimentation, was determined to be ResNet50. The selection of ResNet50 was based on its balance between performance and computational efficiency. Additionally, we utilized pre-trained weights from the COCO dataset, which provided a solid foundation for our model, enabling it to achieve faster convergence and improved accuracy. For optimization, we opted for Stochastic Gradient Descent (SGD), known for its robustness and efficiency in training deep learning models. Our training regimen, encompassing a total of 10 epochs, resulted in a significant reduction in loss and optimal model performance.
+
+Both models demonstrated excellent results in their respective tasks, with rapid convergence and effective loss reduction, underscoring the efficacy of our chosen methodologies and hyperparameters. This repository serves as a comprehensive guide for implementing and optimizing both semantic and instance segmentation models for the leaf segmentation challenge.
 
 ## Prerequisites
 
