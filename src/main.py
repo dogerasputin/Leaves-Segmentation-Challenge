@@ -70,11 +70,9 @@ def get_data_loader_from_path(data_path, label_path, batch_size):
     return get_data_loader(data, label, batch_size)
 
 # model
-from self_model import EVANet
-
 def get_model():
-    # model = torch.hub.load('mateuszbuda/brain-segmentation-pytorch', 'unet',in_channels=3, out_channels=1, init_features=32, pretrained=False)
-    model = EVANet()
+    model = torch.hub.load('mateuszbuda/brain-segmentation-pytorch', 'unet',in_channels=3, out_channels=1, init_features=32, pretrained=False)
+    # model = EVANet()
     return model
 
 # train
